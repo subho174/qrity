@@ -1,5 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-import { sessionSchema } from "./sessionSchema.model";
 
 const attendanceRecordSchema = new Schema(
   {
