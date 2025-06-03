@@ -98,7 +98,6 @@
 
 import { useEffect, useRef, useState } from "react";
 // import { Html5Qrcode } from "html5-qrcode";
-import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import { Html5Qrcode, Html5QrcodeScannerState } from "html5-qrcode";
@@ -108,13 +107,14 @@ import axios from "axios";
 export default function ScannerComponent() {
   const html5QrCodeRef = useRef(null);
   const hasStartedRef = useRef(false); // ensures scanner starts only once
-  // const [scanning, setScanning] = useState(false);
+  const [scanning, setScanning] = useState(false);
   // const [location, setlocation] = useState();
   // const router = useRouter();
   useEffect(() => {
     const startScanner = async () => {
       if (hasStartedRef.current) return; // avoid duplicate starts
       hasStartedRef.current = true;
+      console.log(scanning);
 
       if (!html5QrCodeRef.current) {
         html5QrCodeRef.current = new Html5Qrcode("reader");
@@ -133,16 +133,16 @@ export default function ScannerComponent() {
               height: qrBoxSize,
             },
           },
-          async (sessionId) => {
+          async (decodedText) => {
             await html5QrCodeRef.current?.stop();
             setScanning(false);
             hasStartedRef.current = false;
-            console.log(sessionId);
+            console.log(decodedText);
             const location = await getLocation();
             console.log(location);
             
             axios
-              .post("/api/attendance", { sessionId, location })
+              .post("/api/attendance", { sessionId: decodedText, location })
               .then((res) => console.log(res))
               .catch((err) => console.log(err));
             // try {

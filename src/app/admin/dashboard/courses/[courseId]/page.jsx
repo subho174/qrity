@@ -1,9 +1,11 @@
+import connectDB from "@/src/db/connectDB";
 import Session from "../../../../../model/sessionSchema.model";
 import Client from "./createSession";
 
 export default async function AdminQRCodeSession({ params, searchParams }) {
   const courseId = (await params).courseId;
   const facultyId = (await searchParams).facultyId;
+  await connectDB();
   const session = await Session.findOne({
     // facultyDetails: facultyId,
     courseId,
@@ -17,7 +19,7 @@ export default async function AdminQRCodeSession({ params, searchParams }) {
       facultyId={facultyId}
       url={
         session
-          ? `https://qrity.vercel.app/student/join/session/${session._id}`
+          ? `${session._id}`
           : ""
       }
     />
