@@ -2,16 +2,17 @@ import mongoose, { Schema } from "mongoose";
 
 const attendanceRecordSchema = new Schema(
   {
-    // sessionDetails: {
-    //   type: Schema.Types.ObjectId,
-    //   ref: "Session",
-    // },
+    sessionId: {
+      type: Schema.Types.ObjectId,
+      ref: "Session",
+    },
     // sessionDetails: sessionSchema,
     courseCode: {
       type: String,
       required: [true, "Course Code is required"],
+      unique: true,
     },
-    studentDetails: {
+    studentId: {
       type: Schema.Types.ObjectId,
       ref: "Student",
     },
@@ -21,7 +22,7 @@ const attendanceRecordSchema = new Schema(
   }
 );
 
-attendanceRecordSchema.index({courseCode: 1});
+// attendanceRecordSchema.index({ courseCode: 1 });
 
 const AttendanceRecord =
   mongoose.models.AttendanceRecord ||

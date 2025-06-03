@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 const adminSchema = new Schema(
   {
-    username: {
+    name: {
       type: String,
       trim: true,
       required: [true, "Username is required"],
@@ -11,12 +11,12 @@ const adminSchema = new Schema(
       type: String,
       required: [true, "Email is required"],
       unique: true,
-      validate: {
-        validator: function (value) {
-          return /^[a-zA-Z0-9._%+-]+@iitbbs\.ac\.in$/.test(value);
-        },
-        message: "Only @iitbbs.ac.in email addresses are allowed.",
-      },
+      // validate: {
+      //   validator: function (value) {
+      //     return /^[a-zA-Z0-9._%+-]+@iitbbs\.ac\.in$/.test(value);
+      //   },
+      //   message: "Only @iitbbs.ac.in email addresses are allowed.",
+      // },
     },
     // courseDetails: [courseSchema],
   },
