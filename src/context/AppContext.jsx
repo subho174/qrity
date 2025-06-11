@@ -1,15 +1,29 @@
 "use client";
 
 import { createContext, useContext, useState } from "react";
-
 const AppContext = createContext();
 
 export function AppProvider({ children }) {
-  const [courses, setcourses] = useState();
-  const [sessionURL, setsessionURL] = useState("");
+  const [studentId, setstudentId] = useState();
+  const [courseId, setCourseId] = useState();
+  const [sessionId2, setsessionId2] = useState();
+  const [presentPercentage, setpresentPercentage] = useState();
+  const [count, setcount] = useState(0);
+
   return (
     <AppContext.Provider
-      value={{ courses, setcourses, sessionURL, setsessionURL }}
+      value={{
+        count,
+        setcount,
+        studentId,
+        setstudentId,
+        courseId,
+        setCourseId,
+        sessionId2,
+        setsessionId2,
+        presentPercentage,
+        setpresentPercentage,
+      }}
     >
       {children}
     </AppContext.Provider>

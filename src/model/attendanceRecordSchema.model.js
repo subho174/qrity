@@ -6,11 +6,9 @@ const attendanceRecordSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Session",
     },
-    // sessionDetails: sessionSchema,
-    courseCode: {
-      type: String,
-      required: [true, "Course Code is required"],
-      unique: true,
+    courseId: {
+      type: Schema.Types.ObjectId,
+      ref: "Course",
     },
     studentId: {
       type: Schema.Types.ObjectId,
@@ -21,8 +19,6 @@ const attendanceRecordSchema = new Schema(
     timestamps: true,
   }
 );
-
-// attendanceRecordSchema.index({ courseCode: 1 });
 
 const AttendanceRecord =
   mongoose.models.AttendanceRecord ||

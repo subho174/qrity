@@ -18,9 +18,13 @@ const studentSchema = new Schema(
       //   message: "Only @iitbbs.ac.in email addresses are allowed.",
       // },
     },
+    deviceId: {
+      type: String,
+      required: true,
+    },
     optedCourses: {
       type: [{ type: Schema.Types.ObjectId, ref: "Course" }],
-      default: [], // <--- Add default empty array here
+      default: [],
     },
   },
   {

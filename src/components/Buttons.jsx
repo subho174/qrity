@@ -1,18 +1,20 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { signIn } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
+import { toast } from "sonner";
+import HandleServerAction from "./handleServerAction";
 
 export const LogInButton = ({ role }) => {
   return (
     <Button
-      variant="outline"
       className="w-full"
       onClick={async () => {
-        // document.cookie = "role=admin; path=/";
         document.cookie = `role=${role}; path=/`;
+        toast.info("Logging in...");
         await signIn("google", {
-          callbackUrl: `/${role}/dashboard`,
+          callbackUrl:
+            role === "admin" ? "/admin/courses" : "/student/dashboard",
         });
       }}
     >
@@ -22,7 +24,20 @@ export const LogInButton = ({ role }) => {
           fill="currentColor"
         />
       </svg>
-      Login with Google
+      Continue with Google
     </Button>
+  );
+};
+
+export const LogOutButton = () => {
+  return (
+    <HandleServerAction
+      submitFunction={async () => {
+        await signOut({ callbackUrl: "/" });
+        toast.success("Logged out successfully");
+      }}
+      btnText="Log Out"
+      loadingBtnText="Logging Out"
+    />
   );
 };

@@ -13,12 +13,6 @@ const courseSchema = new Schema(
       required: [true, "Course Code is required"],
       unique: true,
     },
-    // facultyDetails: [
-    //   {
-    //     type: Schema.Types.ObjectId,
-    //     ref: "Admin",
-    //   },
-    // ],
     facultyDetails: {
       type: Schema.Types.ObjectId,
       ref: "Admin",

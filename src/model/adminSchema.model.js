@@ -18,14 +18,13 @@ const adminSchema = new Schema(
       //   message: "Only @iitbbs.ac.in email addresses are allowed.",
       // },
     },
-    // courseDetails: [courseSchema],
   },
   {
     timestamps: true,
   }
 );
 
-adminSchema.index({username: 1, email: 1});
+adminSchema.index({ username: 1, email: 1 });
 
 const Admin = mongoose.models.Admin || mongoose.model("Admin", adminSchema);
 

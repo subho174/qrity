@@ -8,8 +8,9 @@ export async function POST(request) {
     await connectDB();
     const body = await request.json();
     const { courseCode, courseName, facultyEmail } = body;
-    const faculty = await Admin.findOne({ email: facultyEmail }).lean();
-    // console.log(faculty);
+    const faculty = await Admin.findOne({ email: facultyEmail })
+      .select("_id")
+      .lean();
     if (!faculty)
       return NextResponse.json(
         { data: null, message: "No Faculty found" },
@@ -34,7 +35,6 @@ export async function POST(request) {
     );
   } catch (error) {
     console.log(error);
-    
     return NextResponse.json(
       { data: null, message: "Server Error" },
       { status: 500 }
@@ -46,9 +46,10 @@ export async function PATCH(request) {
   try {
     await connectDB();
     const body = await request.json();
-    const {courseId, courseCode, courseName, facultyEmail } = body;
-    const faculty = await Admin.findOne({ email: facultyEmail }).lean();
-    // console.log(faculty);
+    const { courseId, courseCode, courseName, facultyEmail } = body;
+    const faculty = await Admin.findOne({ email: facultyEmail })
+      .select("_id")
+      .lean();
     if (!faculty)
       return NextResponse.json(
         { data: null, message: "No Faculty found" },

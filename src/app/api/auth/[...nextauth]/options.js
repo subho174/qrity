@@ -21,58 +21,18 @@ export const authOptions = {
         await connectDB();
         const { name, email } = user;
         const role = (await cookies()).get("role")?.value;
+        // console.log(role, typeof undefined);
+
         if (!role) throw new Error("User Type not found");
-
-        // if (role === "admin") {
-        //   const existingAdmin = await Admin.findOne({ email });
-        //   if (!existingAdmin) {
-        //     const newAdmin = await Admin.create({
-        //       username,
-        //       email,
-        //     });
-
-        //     if (!newAdmin) throw new Error("Failed to register new admin");
-
-        //     user._id = newAdmin?._id;
-        //   } else user._id = existingAdmin?._id;
-        // } else {
-        //   const existingStudent = await Student.findOne({ email });
-        //   if (!existingStudent) {
-        //     const newStudent = await Student.create({
-        //       username,
-        //       email,
-        //     });
-
-        //     if (!newStudent) {
-        //       throw new Error("Failed to register new student");
-        //     }
-        //     user._id = newStudent?._id;
-        //   } else user._id = existingStudent?._id;
-        // }
         const Model = role === "admin" ? Admin : Student;
+        let existingUser = await Model.findOne({ email }).lean();
 
-        let existingUser = await Model.findOne({ email });
-
-        // if (!existingUser) {
-        //   let newUser = await Model.create({ name, email });
-        //   if (role !== "admin") {
-        //     newUser.optedCourses = [];
-        //     newUser = await newUser.save();
-        //   }
-        //   if (!newUser) throw new Error(`Failed to register new ${role}`);
-        //   existingUser = newUser;
-        // }
         if (!existingUser) {
-          // Prepare initial user data
           const userData = { name, email };
-          if (role !== "admin") {
-            userData.optedCourses = [];
-          }
-          console.log(userData);
+          if (role !== "admin") userData.optedCourses = [];
 
           // Create and save new user in one go
           const newUser = await Model.create(userData);
-          console.log(newUser);
 
           if (!newUser) {
             throw new Error(`Failed to register new ${role}`);
@@ -82,6 +42,7 @@ export const authOptions = {
 
         user._id = existingUser._id;
         user.optedCourses = existingUser.optedCourses;
+        user.isAdmin = role === "admin" ? true : false;
         return true;
       } catch (error) {
         console.error("Sign In error", error);
@@ -98,6 +59,7 @@ export const authOptions = {
     }) {
       if (token) {
         session.user._id = token._id;
+        session.user.isAdmin = token.isAdmin;
         session.user.name = token.name;
         session.user.email = token.email;
         session.user.optedCourses = token.optedCourses;
@@ -111,6 +73,7 @@ export const authOptions = {
     }) {
       if (user) {
         token._id = user._id?.toString();
+        token.isAdmin = user.isAdmin;
         token.name = user.name;
         token.email = user.email;
         token.optedCourses = user.optedCourses;
@@ -120,7 +83,7 @@ export const authOptions = {
   },
   pages: {
     signIn: "/sign-in",
-    // error: "/api/auth/AuthError",
+    error: "/api/auth/AuthError",
   },
   session: {
     strategy: "jwt",

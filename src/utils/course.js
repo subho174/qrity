@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "sonner";
 
 export const addCourse = (courseData, router) => {
   axios
@@ -6,8 +7,12 @@ export const addCourse = (courseData, router) => {
     .then((res) => {
       console.log(res);
       router.refresh();
+      toast.success("Course added successfully !");
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err);
+      toast.error(`Failed to add course : ${err.response.data.message}`);
+    });
 };
 
 export const updateCourse = (courseData, router) => {
@@ -16,6 +21,10 @@ export const updateCourse = (courseData, router) => {
     .then((res) => {
       console.log(res);
       router.refresh();
+      toast.success("Course updated successfully !");
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err);
+      toast.error(`Failed to update course : ${err.response.data.message}`);
+    });
 };

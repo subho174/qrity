@@ -12,9 +12,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Plus } from "lucide-react";
+import { Pencil, Plus } from "lucide-react";
 import { addCourse, updateCourse } from "../utils/course";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function CourseForm({ existingCourse = null, type }) {
   const [course, setCourse] = useState({
@@ -22,8 +23,8 @@ export default function CourseForm({ existingCourse = null, type }) {
     courseCode: "",
     courseName: "",
     facultyEmail: "",
-    // studentEmails: [],
   });
+  const [isLoading, setisLoading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -41,61 +42,53 @@ export default function CourseForm({ existingCourse = null, type }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (
-      !course.courseName ||
-      !course.courseCode ||
-      !course.facultyEmail
-      // course.studentEmails.length === 0
-    ) {
-      console.error("All fields are required");
-      // toast({ title: "All fields are required." })
-      return;
-    }
-    if (course.courseCode.length !== 7) {
-      console.error("Enter valid course code");
-      return;
-    }
 
     try {
+      setisLoading(true);
+      if (!course.courseName || !course.courseCode || !course.facultyEmail) {
+        toast.warning("All fields are required");
+        return;
+      }
+      if (course.courseName.length > 15) {
+        toast.warning("Length of Course Name must be less than 15 letters");
+        return;
+      }
+      if (course.courseCode.length !== 7) {
+        toast.warning("Course code must contain 7 letters only without space");
+        return;
+      }
+
       if (type === "addCourse") addCourse(course, router);
       else {
         if (!course.courseId) {
-          console.error("No course id found");
+          toast.error("No course id found");
           return;
         }
         updateCourse(course, router);
       }
-      //   toast({
-      //     title: existingCourse ? "Course updated!" : "Course added!",
-      //     description: `${course.name} (${course.courseCode})`,
-      //   })
 
       if (!existingCourse) {
         setCourse({
           courseName: "",
           courseCode: "",
           facultyEmail: "",
-          // studentEmails: [],
         });
       }
+      setisLoading(false);
     } catch (err) {
-      //   toast({
-      //     title: "Error",
-      //     description: "Something went wrong. Try again.",
-      //     variant: "destructive"
-      //   })
-      console.log(err);
+      toast.error("Server Error");
+      throw new Error("Server Error", err);
     }
   };
 
   return (
     <Dialog>
-      {/* <form onSubmit={handleSubmit}> */}
       <DialogTrigger asChild>
-        {/* <Button variant="outline">Open Dialog</Button> */}
-        <Button className="flex items-center gap-2">
+        <Button className="flex items-center gap-2" variant="custom">
           {existingCourse ? (
-            "Update"
+            <>
+              <Pencil /> Update
+            </>
           ) : (
             <>
               <Plus className="w-4 h-4" />
@@ -105,7 +98,6 @@ export default function CourseForm({ existingCourse = null, type }) {
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
-        {/* <Card className="w-full max-w-md shadow-xl rounded-2xl"> */}
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-4">
             <DialogHeader>
@@ -156,9 +148,7 @@ export default function CourseForm({ existingCourse = null, type }) {
             </Button>
           </CardFooter>
         </form>
-        {/* </Card> */}
       </DialogContent>
-      {/* </form> */}
     </Dialog>
   );
 }
