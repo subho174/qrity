@@ -17,7 +17,6 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-
 export default function CreateSession({
   courseId,
   facultyId,
@@ -102,7 +101,10 @@ export default function CreateSession({
               loadingBtnText="Deleting"
               actionType="deleteSession"
               style="bg-red-600 hover:border-red-600 hover:bg-white hover:text-red-600"
-              onSuccess={(data) => setqrString(data)}
+              onSuccess={(data) => {
+                setqrString(data);
+                setsessionIdState(sessionId);
+              }}
               className="col-span-2 justify-self-center"
             >
               <input

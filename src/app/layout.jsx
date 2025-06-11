@@ -3,7 +3,7 @@ import "./globals.css";
 import { AuthProvider } from "../context/AuthProvider";
 import { AppProvider } from "../context/AppContext";
 import { ThemeProvider } from "../context/ThemeProvider";
-import Navbar from '@/src/components/Navbar';
+import Navbar from "@/src/components/Navbar";
 import { Toaster } from "sonner";
 
 const geistSans = Geist({
@@ -71,7 +71,12 @@ export default function RootLayout({ children }) {
             <AppProvider>
               <Navbar />
               {children}
-              <Toaster expand={true} position="top-right" richColors />
+              <Toaster
+                toastOptions={{ className: "sonner-font" }}
+                expand={true}
+                position="top-right"
+                richColors
+              />
             </AppProvider>
           </ThemeProvider>
         </AuthProvider>

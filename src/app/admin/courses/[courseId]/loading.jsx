@@ -8,8 +8,8 @@ import {
 
 export default function Loading() {
   return (
-    <div className="justify-items-center">
-      <Card className="w-fit mx-auto my-20 p-6 shadow-lg border-0 hover:bg-card rounded-2xl">
+    <div className="h-screen content-center justify-items-center">
+      <Card className="w-fit mx-auto p-6 shadow-lg border-0 hover:bg-card rounded-2xl">
         <CardHeader className="justify-items-center">
           <Skeleton className="h-4 w-32" />
         </CardHeader>
@@ -28,7 +28,7 @@ export default function Loading() {
           <Skeleton className="h-4 w-32 col-span-2 justify-self-center" />
         </CardFooter>
       </Card>
-      <Skeleton className="h-6 mt-5 w-32" />
+      <Skeleton className="h-6 mt-6 w-32" />
     </div>
   );
 }

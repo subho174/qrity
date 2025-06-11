@@ -218,3 +218,9 @@
     --chart-5: oklch(0.645 0.246 16.439);
   }
 }
+
+@layer components {
+  .sonner-font {
+    font-family: var(--font-open-sans);
+  }
+}

@@ -36,7 +36,7 @@ const page = async () => {
   }
 
   return (
-    <div className="flex flex-col my-20 gap-4 items-center px-4 md:px-12 xl:px-32 max-w-[1400px] mx-auto">
+    <div className="flex flex-col my-25 gap-4 items-center px-4 md:px-12 xl:px-32 max-w-[1400px] mx-auto">
       <h1 className="text-3xl font-semibold mb-6">Ongoing Courses</h1>
 
       {courses.length !== 0 ? (

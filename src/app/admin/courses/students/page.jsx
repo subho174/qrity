@@ -47,7 +47,7 @@ const page = async ({ searchParams }) => {
             <h2 className="text-lg font-semibold">Enrolled Students</h2>
           </div>
 
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto max-h-65 overflow-y-auto">
             <Table>
               <TableHeader>
                 <TableRow>

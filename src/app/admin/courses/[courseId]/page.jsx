@@ -48,7 +48,7 @@ export default async function AdminQRCodeSession({ params, searchParams }) {
   // console.log(previousSessions);
 
   return (
-    <div className="py-20 justify-items-center">
+    <div className="h-screen content-center justify-items-center">
       <CreateSession
         courseId={courseId}
         facultyId={facultyId}

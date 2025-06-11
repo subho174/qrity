@@ -13,7 +13,7 @@ export default function Home() {
             Smart QR-Based <span className="text-primary">Attendance</span>{" "}
             System
           </h1>
-          <p className="text-textColor text-base my-6 sm:text-lg">
+          <p className="text-gray-700 text-base my-6 sm:text-lg">
             Eliminate proxy attendance and manual tracking with our seamless QR
             attendance solution. Built for students and faculty to streamline
             classroom presence.

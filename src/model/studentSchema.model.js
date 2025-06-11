@@ -18,10 +18,6 @@ const studentSchema = new Schema(
       //   message: "Only @iitbbs.ac.in email addresses are allowed.",
       // },
     },
-    deviceId: {
-      type: String,
-      required: true,
-    },
     optedCourses: {
       type: [{ type: Schema.Types.ObjectId, ref: "Course" }],
       default: [],
@@ -32,7 +28,7 @@ const studentSchema = new Schema(
   }
 );
 
-studentSchema.index({ username: 1, email: 1, optedCourses: 1 });
+studentSchema.index({ name: 1, email: 1, optedCourses: 1 });
 
 const Student =
   mongoose.models.Student || mongoose.model("Student", studentSchema);

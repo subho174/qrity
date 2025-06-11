@@ -14,9 +14,6 @@ const Errorpage = async ({ searchParams }) => {
           <p className="mb-4 text-3xl tracking-tight font-semibold md:text-4xl">
             {error}
           </p>
-          <p className="mb-6 text-lg font-light text-textColor">
-            {error.message}
-          </p>
           <Button variant="custom">
             <House />
             <Link href="/">Back to Homepage</Link>
