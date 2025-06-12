@@ -40,7 +40,7 @@ export default function AttendanceChart({
   isAdmin = null,
   courseId,
 }) {
-  const { studentId, presentPercentage, setpresentPercentage } =
+  const { studentId, setstudentId, presentPercentage, setpresentPercentage } =
     useAppContext();
   const [isLoading, setisLoading] = useState(false);
 
@@ -52,6 +52,13 @@ export default function AttendanceChart({
   useEffect(() => {
     setpresentPercentage(undefined);
     if (!studentId) return;
+
+    if (!totalSessions) {
+      setstudentId("");
+      toast.error("No past sessions found");
+      return;
+    }
+
     setisLoading(true);
     axios
       .get(`/api/attendance?studentId=${studentId}&courseId=${courseId}`)

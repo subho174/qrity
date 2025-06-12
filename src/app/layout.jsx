@@ -3,6 +3,7 @@ import "./globals.css";
 import { AuthProvider } from "../context/AuthProvider";
 import { AppProvider } from "../context/AppContext";
 import { ThemeProvider } from "../context/ThemeProvider";
+import { Analytics } from "@vercel/analytics/next"
 import Navbar from "@/src/components/Navbar";
 import { Toaster } from "sonner";
 
@@ -71,6 +72,7 @@ export default function RootLayout({ children }) {
             <AppProvider>
               <Navbar />
               {children}
+              <Analytics />
               <Toaster
                 toastOptions={{ className: "sonner-font" }}
                 expand={true}
